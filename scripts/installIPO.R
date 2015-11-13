@@ -7,6 +7,7 @@ biocLite("xcms")
 
 install.packages("rsm") 
 install.packages("devtools")
+install.packages("optparse")
 
 library("devtools")
 install_github("glibiseller/IPO")
