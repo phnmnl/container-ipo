@@ -25,6 +25,9 @@ ADD scripts /scripts
 # Add executable to run when container is spinned up
 ADD entrypoint.sh /
 
+# Add automatic repo finder for R:
+RUN echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site
+
 # Install IPO
 RUN Rscript /scripts/installIPO.R
 
