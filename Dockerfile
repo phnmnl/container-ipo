@@ -24,11 +24,9 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y libcurl4-openssl-
 # Add scripts folder to container
 ADD scripts /scripts
 
-# Add executable to run when container is spinned up
-ADD entrypoint.sh /
-
 # Add automatic repo finder for R:
 RUN echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site
+
 
 # Install IPO
 RUN Rscript /scripts/installIPO.R
@@ -38,4 +36,4 @@ RUN apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,lo
 
 RUN chmod +x /scripts/runIPO.R
 # Define Entry point script
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/scripts/runIPO.R"]
