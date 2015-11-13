@@ -18,6 +18,7 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y libcurl4-openssl-
 	libssh2-1-dev \
 	libxml2-dev \
 	icu-devtools \
+	netcdf-bin \
 	r-base r-base-dev
 
 # Add scripts folder to container
