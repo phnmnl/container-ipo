@@ -33,5 +33,9 @@ RUN echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site
 # Install IPO
 RUN Rscript /scripts/installIPO.R
 
+# Clean up
+RUN apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
+
+RUN chmod +x /scripts/runIPO.R
 # Define Entry point script
 ENTRYPOINT ["/entrypoint.sh"]
