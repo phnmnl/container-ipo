@@ -19,3 +19,9 @@ On Mac OS X with docker-machine, because there is this intermediate VM, it is re
 ```
 docker run -v /Users:/Users ipo -i /Users/yourUser/path/to/filesPaths -o /Users/yourUser/path/to/out
 ```
+
+IPO has a number of options, which we have wrapped for you, to find them out please execute:
+
+```
+docker run ipo
+```
