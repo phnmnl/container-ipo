@@ -3,6 +3,19 @@
 
 usage
 
+On the main directory, to build the image:
 ```
-   docker run -d -p 8080:80 -p 8021:21 ipo
+docker build -t ipo .
+```
+
+And then to run:
+
+```
+docker run ipo -i /complete/path/to/filesPaths -o /complete/path/to/out
+```
+
+On Mac OS X with docker-machine, because there is this intermediate VM, it is recommended to mount a high level directory on docker (as /Users, which will be already mounted on the docker-machine VM.
+
+```
+docker run -v /Users:/Users ipo -i /Users/yourUser/path/to/filesPaths -o /Users/yourUser/path/to/out
 ```
