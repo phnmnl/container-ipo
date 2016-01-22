@@ -4,7 +4,7 @@
 
 FROM ubuntu:14.04
 
-MAINTAINER venkata chandrasekhar nainala (venkata@ebi.ac.uk / mailcs76@gmail.com)
+MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 # Install R
 RUN echo "deb http://mirrors.ebi.ac.uk/CRAN/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
