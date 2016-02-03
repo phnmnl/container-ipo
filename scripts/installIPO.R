@@ -10,4 +10,4 @@ install.packages("devtools")
 install.packages("optparse")
 
 library("devtools")
-install_github("glibiseller/IPO")
+install_github("phnmnl/IPO")
