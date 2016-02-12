@@ -44,4 +44,4 @@ resultRetcorGroup <- optimizeRetGroup(xset=optimizedXcmsSetObject, params=retcor
 capture.output(
   writeRScript(resultPeakpicking$best_settings$parameters, resultRetcorGroup$best_settings, nSlaves=opt$slaves),
   file = paste(opt$ouput,"runXCMSWithArguments.R",sep="/"),type = "message")
-save(list("resultPeakpicking","resultRetcorGroup"),file = paste(opt$ouput,"optimizedParameters.RData",sep="/"))
+save(resultPeakpicking,resultRetcorGroup,file = paste(opt$ouput,"optimizedParameters.RData",sep="/"))
