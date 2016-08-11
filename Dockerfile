@@ -29,5 +29,7 @@ RUN echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site
 # Install IPO
 RUN Rscript /scripts/installIPO.R
 
+RUN mv /scripts/runIPO.R /usr/local/bin/runIPO.R
+RUN chmod +x /usr/local/bin/runIPO.R
 # Define Entry point script
-ENTRYPOINT ["/scripts/runIPO.R"]
+ENTRYPOINT ["/usr/local/bin/runIPO.R"]
