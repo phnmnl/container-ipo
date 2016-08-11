@@ -10,7 +10,7 @@ MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 RUN echo "deb http://mirrors.ebi.ac.uk/CRAN/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
 	gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 && \
 	gpg -a --export E084DAB9 | sudo apt-key add - && \
-apt-get update && apt-get -y upgrade && apt-get install -y libcurl4-openssl-dev \
+apt-get update && apt-get install -y --no-install-recommends libcurl4-openssl-dev \
         libnetcdf-dev \
 	libssl-dev \
 	libssh2-1-dev \
