@@ -2,7 +2,7 @@
 # Microservices - IPO
 # VERSION               0.1.1
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 LABEL software=IPO
 LABEL software.version=0.1.1
@@ -11,10 +11,7 @@ LABEL version=0.1
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 # Install R
-RUN echo "deb http://mirrors.ebi.ac.uk/CRAN/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
-	gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 && \
-	gpg -a --export E084DAB9 | sudo apt-key add - && \
-apt-get update && apt-get install -y --no-install-recommends libcurl4-openssl-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev libcurl4-openssl-dev \
         libnetcdf-dev \
 	libssl-dev \
 	libssh2-1-dev \
