@@ -2,6 +2,10 @@
 # Microservices - IPO
 # VERSION               0.1.1
 
+LABEL software=IPO
+LABEL software.version=0.1.1
+LABEL version=0.1
+
 FROM ubuntu:14.04
 
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
