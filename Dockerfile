@@ -30,8 +30,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev li
     	apt-get purge -y r-base-dev git libcurl4-openssl-dev libssl-dev libssh2-1-dev r-base-dev libboost-dev && \
 apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
-# Install IPO
+# Add IPO script to path
 RUN mv /scripts/runIPO.R /usr/local/bin/runIPO.R
 RUN chmod +x /usr/local/bin/runIPO.R
+ADD runTest1.sh /usr/local/bin/runTest1.sh
+RUN chmod +x /usr/local/bin/runTest1.sh
+
 # Define Entry point script
 ENTRYPOINT ["runIPO.R"]

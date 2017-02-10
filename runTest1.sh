@@ -1,4 +1,5 @@
 #!/bin/bash
+apt-get update -y && apt-get install -y --no-install-recommends wget ca-certificates
 
 # download files path and data files
 wget "https://drive.google.com/uc?export=download&id=0B7S2ZMhdzWwbMG5wOXpmU3Y1RWc" -O filesPaths_2_ms.txt
@@ -10,8 +11,8 @@ runIPO.R -i filesPaths_2_ms.txt -o contTest -s 4
 
 # check that JPGs graphs have been created
 for index in `seq 1 4`; do
-	if [ ! -f conTest/rsm_$index\.jpg ]; then
-		echo "JPG graph rsm_$index\.jpg not found, failing test"
+	if [ ! -f conTest/rsm_$index.jpg ]; then
+		echo "JPG graph rsm_$index.jpg not found, failing test"
 		exit 1
 	fi
 done
