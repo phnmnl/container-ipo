@@ -39,5 +39,6 @@ RUN Rscript /scripts/installIPO.R
 RUN apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
 RUN chmod +x /scripts/runIPO.R
+
 # Define Entry point script
-ENTRYPOINT ["/scripts/runIPO.R"]
+#ENTRYPOINT ["/scripts/runIPO.R"]
