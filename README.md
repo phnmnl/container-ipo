@@ -22,7 +22,7 @@ IPO was successfully applied to data derived from liquid chromatography coupled 
 
 ## Functionality
 
-- Other Tools
+- Optimization / Parameter Selection Optimization
 
 ## Approaches
 
@@ -42,6 +42,7 @@ IPO was successfully applied to data derived from liquid chromatography coupled 
 
 - [Venkata Chandrasekhar Nainala](https://github.com/CS76) (EMBL-EBI)
 - [Pablo Moreno](https://github.com/pcm32) (EMBL-EBI)
+- [Philippe Rocca-Serra](https://github.com/proccaserra) (University of Oxford)
 
 ## Website
 
