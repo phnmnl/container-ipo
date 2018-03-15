@@ -1,6 +1,6 @@
 # PhenoMeNal H2020
 # Microservices - IPO
-FROM phnmnl/xcms
+FROM container-registry.phenomenal-h2020.eu/phnmnl/xcms
 
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
