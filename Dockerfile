@@ -12,12 +12,6 @@ LABEL version=0.3
 ADD scripts/* /usr/local/bin/
 RUN chmod +x /usr/local/bin/*
 
-# Add scripts from Workflow4Metabolomics
-#ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/ipo4retgroup.r /usr/local/bin/
-#ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/ipo4xcmsSet.r /usr/local/bin/
-#ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/lib.r /usr/local/bin/
-#RUN chmod +x /usr/local/bin/*.r
-
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev libcurl4-openssl-dev libnetcdf-dev libssl-dev libssh2-1-dev libxml2-dev icu-devtools netcdf-bin r-base r-base-dev && \
 	echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site && \
