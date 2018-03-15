@@ -27,7 +27,10 @@ RUN chmod +x /usr/local/bin/runIPO.R
 #ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/ipo4retgroup.r /usr/local/bin/
 #ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/ipo4xcmsSet.r /usr/local/bin/
 #ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/lib.r /usr/local/bin/
-#RUN chmod +x /usr/local/bin/*.r 
+ADD scripts/ipo4retgroup.r /usr/local/bin/
+ADD scripts/ipo4retgroup.r /usr/local/bin/
+ADD scripts/ipo4retgroup.r /usr/local/bin/
+RUN chmod +x /usr/local/bin/*.r
 
 # Add testing to container
 ADD runTest1.sh /usr/local/bin/runTest1.sh
@@ -35,4 +38,3 @@ RUN chmod +x /usr/local/bin/runTest1.sh
 
 # Define Entry point script (Warning: may break Galaxy scripts!)
 ENTRYPOINT ["runIPO.R"]
-
