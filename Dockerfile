@@ -8,26 +8,23 @@ LABEL software=IPO
 LABEL software.version=1.7.5
 LABEL version=0.3
 
-# Install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev libcurl4-openssl-dev libnetcdf-dev libssl-dev libssh2-1-dev libxml2-dev icu-devtools netcdf-bin r-base r-base-dev && \
-	echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site && \
-	Rscript /scripts/installIPO.R && \
-	R -e 'remove.packages(c("devtools"))' && \
-    	apt-get purge -y r-base-dev git libcurl4-openssl-dev libssl-dev libssh2-1-dev r-base-dev libboost-dev && \
-	apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{cache,log}/ /tmp/* /var/tmp/*
-
-# Add scripts folder to container
-ADD scripts /scripts
-
-# Add IPO script to path
-RUN mv /scripts/runIPO.R /usr/local/bin/runIPO.R
-RUN chmod +x /usr/local/bin/runIPO.R
+# Add IPO scripts to path
+ADD scripts/* /usr/local/bin/
+RUN chmod +x /usr/local/bin/*
 
 # Add scripts from Workflow4Metabolomics
 #ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/ipo4retgroup.r /usr/local/bin/
 #ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/ipo4xcmsSet.r /usr/local/bin/
 #ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/lib.r /usr/local/bin/
-#RUN chmod +x /usr/local/bin/*.r 
+#RUN chmod +x /usr/local/bin/*.r
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev libcurl4-openssl-dev libnetcdf-dev libssl-dev libssh2-1-dev libxml2-dev icu-devtools netcdf-bin r-base r-base-dev && \
+	echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site && \
+	Rscript /usr/local/bin/installIPO.R && \
+	R -e 'remove.packages(c("devtools"))' && \
+    	apt-get purge -y r-base-dev git libcurl4-openssl-dev libssl-dev libssh2-1-dev r-base-dev libboost-dev && \
+	apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{cache,log}/ /tmp/* /var/tmp/*
 
 # Add testing to container
 ADD runTest1.sh /usr/local/bin/runTest1.sh
