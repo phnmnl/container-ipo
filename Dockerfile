@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev li
 	Rscript /scripts/installIPO.R && \
 	R -e 'remove.packages(c("devtools"))' && \
     	apt-get purge -y r-base-dev git libcurl4-openssl-dev libssl-dev libssh2-1-dev r-base-dev libboost-dev && \
-	apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
+	apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{cache,log}/ /tmp/* /var/tmp/*
 
 # Add scripts folder to container
 ADD scripts /scripts
@@ -22,6 +22,12 @@ ADD scripts /scripts
 # Add IPO script to path
 RUN mv /scripts/runIPO.R /usr/local/bin/runIPO.R
 RUN chmod +x /usr/local/bin/runIPO.R
+
+# Add scripts from Workflow4Metabolomics
+#ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/ipo4retgroup.r /usr/local/bin/
+#ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/ipo4xcmsSet.r /usr/local/bin/
+#ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/lib.r /usr/local/bin/
+#RUN chmod +x /usr/local/bin/*.r 
 
 # Add testing to container
 ADD runTest1.sh /usr/local/bin/runTest1.sh
