@@ -7,7 +7,7 @@ wget "https://drive.google.com/uc?export=download&id=0B7S2ZMhdzWwbUk9LdWl3SXFwQn
 wget "https://drive.google.com/uc?export=download&id=0B7S2ZMhdzWwbUk90c1Rva0Fibnc" -O MSpos-Ex1-Col0-48h-Ag-2_1-A,1_01_9820.mzData 
 mkdir contTest
 
-runIPO.R -i filesPaths_2_ms.txt -o contTest -s 4
+runIPO.R -i filesPaths_2_ms.txt -o contTest -s 2
 
 # check that JPGs graphs have been created
 for index in `seq 1 4`; do
