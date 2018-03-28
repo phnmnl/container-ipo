@@ -11,6 +11,7 @@ biocLite("xcms")
 
 install.packages("rsm") 
 install.packages("optparse")
+install.packages("batch")
 
 
 install_github("phnmnl/IPO")
