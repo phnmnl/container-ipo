@@ -13,9 +13,10 @@ options(bitmapType='cairo')
 cat("\tPACKAGE INFO\n")
 #pkgs=c("xcms","batch")
 pkgs=c("parallel","BiocGenerics", "Biobase", "Rcpp", "mzR", "xcms","rsm","igraph","CAMERA","IPO","snow","batch")
+
 for(pkg in pkgs) {
-  suppressWarnings( suppressPackageStartupMessages( stopifnot( library(pkg, quietly=TRUE, logical.return=TRUE, character.only=TRUE))))
-  cat(pkg,"\t",as.character(packageVersion(pkg)),"\n",sep="")
+    cat(pkg,"\t",as.character(packageVersion(pkg)),"\n",sep="")
+    suppressWarnings( suppressPackageStartupMessages( stopifnot( library(pkg, quietly=TRUE, logical.return=TRUE, character.only=TRUE))))
 }
 source_local <- function(fname){ argv <- commandArgs(trailingOnly = FALSE); base_dir <- dirname(substring(argv[grep("--file=", argv)], 8)); source(paste(base_dir, fname, sep="/")) }
 cat("\n\n");
@@ -69,8 +70,8 @@ if (!is.null(listArguments[["zipfile"]])){
 
 
 if (!is.null(listArguments[["singlefile_galaxyPath"]])){
-    singlefile_galaxyPath = unlist(strsplit(listArguments[["singlefile_galaxyPath"]],",")); listArguments[["singlefile_galaxyPath"]]=NULL
-    singlefile_sampleName = unlist(strsplit(listArguments[["singlefile_sampleName"]],",")); listArguments[["singlefile_sampleName"]]=NULL
+  singlefile_galaxyPath = listArguments[["singlefile_galaxyPath"]]; listArguments[["singlefile_galaxyPath"]]=NULL
+  singlefile_sampleName = listArguments[["singlefile_sampleName"]]; listArguments[["singlefile_sampleName"]]=NULL
 }
 
 # single file case
@@ -140,9 +141,9 @@ cat("\n\n")
 cat("\tMAIN PROCESSING INFO\n")
 
 
-ipo4retgroup(bestXset, directory, parametersOutput, listArguments, samplebyclass)
+resultRetcorGroup = ipo4retgroup(bestXset, directory, parametersOutput, listArguments, samplebyclass)
 
-
+print(resultRetcorGroup)
 
 cat("\n\n")
 
@@ -151,7 +152,8 @@ cat("\n\n")
 
 cat("\tEXPORTING INFO\n")
 
-save.image(file="ipo-retcor.RData")
+# Save current workspace
+save.image(file="resultRetCor.RData")
 
 cat("\n\n")
 

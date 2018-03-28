@@ -13,11 +13,11 @@ options(bitmapType='cairo')
 cat("\tPACKAGE INFO\n")
 #pkgs=c("xcms","batch")
 pkgs=c("parallel","BiocGenerics", "Biobase", "Rcpp", "mzR", "xcms","rsm","igraph","CAMERA","IPO","snow","batch")
-cat(pkgs)
+
 for(pkg in pkgs) {
   print(pkg)
-  suppressWarnings( suppressPackageStartupMessages( stopifnot( library(pkg, quietly=TRUE, logical.return=TRUE, character.only=TRUE))))
   cat(pkg,"\t",as.character(packageVersion(pkg)),"\n",sep="")
+  suppressWarnings( suppressPackageStartupMessages( stopifnot( library(pkg, quietly=TRUE, logical.return=TRUE, character.only=TRUE))))
 }
 source_local <- function(fname){ argv <- commandArgs(trailingOnly = FALSE); base_dir <- dirname(substring(argv[grep("--file=", argv)], 8)); source(paste(base_dir, fname, sep="/")) }
 cat("\n\n"); 
@@ -48,7 +48,7 @@ cat("\n\n")
 # ----- PROCESSING INFILE -----
 cat("\tARGUMENTS PROCESSING INFO\n")
 
-optimResultsRdataOutput = paste("ipo4xcmsSet","RData",sep=".")
+optimResultsRdataOutput = paste("resultPeakpicking","RData",sep=".")
 if (!is.null(listArguments[["optimResultsRdataOutput"]])){
   optimResultsRdataOutput = listArguments[["optimResultsRdataOutput"]]; listArguments[["optimResultsRdataOutput"]]=NULL
 }
@@ -80,6 +80,7 @@ if (!is.null(listArguments[["singlefile_galaxyPath"]])){
 # single file case
 #@TODO: need to be refactoring
 if(exists("singlefile_galaxyPath") && (singlefile_galaxyPath!="")) {
+  print(singlefile_galaxyPath)
   if(!file.exists(singlefile_galaxyPath)){
     error_message=paste("Cannot access the sample:",singlefile_sampleName,"located:",singlefile_galaxyPath,". Please, contact your administrator ... if you have one!")
     print(error_message); stop(error_message)
@@ -88,11 +89,10 @@ if(exists("singlefile_galaxyPath") && (singlefile_galaxyPath!="")) {
   cwd=getwd()
   dir.create("raw")
   setwd("raw")
-  file.symlink(singlefile_galaxyPath,singlefile_sampleName)
+  file.symlink(singlefile_galaxyPath, singlefile_sampleName)
   setwd(cwd)
   
   directory = "raw"
-  
 }
 
 # We unzip automatically the chromatograms from the zip files.
@@ -134,19 +134,22 @@ cat("\n\n")
 
 cat("\tMAIN PROCESSING INFO\n")
 
-optimResults = ipo4xcmsSet(directory, parametersOutput, listArguments, samplebyclass)
+resultPeakpicking = ipo4xcmsSet(directory, parametersOutput, listArguments, samplebyclass)
+
 #Important results
-bestXset = optimResults$xset
-bestXsetParams = optimResults$parameters
-PPscore = optimResults$results[["PPS"]]
+bestXset = resultPeakpicking$xset
+bestXsetParams = resultPeakpicking$parameters
+PPscore = resultPeakpicking$results[["PPS"]]
 cat("\n\n")
 
 
 # ----- EXPORT -----
 
-cat("\tXSET OBJECT INFO\n")
-print(optimResults)
+cat("\tPEAK PICKING INFO\n")
+print(resultPeakpicking)
 
+# Keep results of the best xset
+write.table(t(as.data.frame(resultPeakpicking)), file=parametersOutput,  sep="\t", row.names=T, col.names=F, quote=F)
 
 #saving R data in .Rdata file to save the variables used in the present tool
 objects2save = c("bestXset", "bestXsetParams", "PPscore", "zipfile")

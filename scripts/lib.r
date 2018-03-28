@@ -40,7 +40,8 @@ ipo4xcmsSet = function(directory, parametersOutput, listArguments, samplebyclass
   resultPeakpicking_best_settings_parameters = resultPeakpicking$best_settings$parameters[!(names(resultPeakpicking$best_settings$parameters) %in% c("nSlaves","verbose.columns"))]
   write.table(t(as.data.frame(resultPeakpicking_best_settings_parameters)), file=parametersOutput,  sep="\t", row.names=T, col.names=F, quote=F)  # can be read by user
   
-  # Returns best settings containing amomg others:
+  
+  # Returns best settings containing among others:
   # - Best Xset (xcmsSet object)
   # - Best Xset parameters
   # - PeakPickingScore (PPS)
@@ -66,6 +67,7 @@ ipo4retgroup = function(xset, directory, parametersOutput, listArguments, sample
   
   # export  best retCor + grouping parameters
   write.table(t(as.data.frame(resultRetcorGroup$best_settings)), file=parametersOutput,  sep="\t", row.names=T, col.names=F, quote=F)  #can be read by user
+  return (resultRetcorGroup)
 }
 
 
