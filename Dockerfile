@@ -26,8 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev li
 	apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{cache,log}/ /tmp/* /var/tmp/*
 
 # Add testing to container
-#ADD runTest1.sh /usr/local/bin/runTest1.sh
-#RUN chmod +x /usr/local/bin/runTest1.sh
+ADD runTest1.sh /usr/local/bin/runTest1.sh
+RUN chmod +x /usr/local/bin/runTest1.sh
 
 # Define Entry point script (Warning: may break Galaxy scripts!)
 #ENTRYPOINT ["runIPO.R"]
