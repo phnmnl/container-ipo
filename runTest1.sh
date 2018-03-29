@@ -2,7 +2,7 @@
 apt-get update -y && apt-get install -y --no-install-recommends wget ca-certificates
 
 # download test data file
-wget "https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/test-data/MM8.mzML" -O MM8.mzML
+wget "https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/test-data/MM8.mzML" -O "/usr/local/bin/MM8.mzML"
 
 # Peak picking first
 ipo4xcmsSet.r singlefile_galaxyPath /usr/local/bin/MM8.mzML singlefile_sampleName MM8.mzML parametersOutput MM8_IPO_parameters4xcmsSet.tsv nSlaves 4
