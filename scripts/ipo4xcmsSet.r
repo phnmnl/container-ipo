@@ -7,7 +7,7 @@ log_file=file("log.txt", open = "wt")
 sink(log_file)
 sink(log_file, type = "output")
 
-# 
+#
 # ----- PACKAGE -----
 options(bitmapType='cairo')
 cat("\tPACKAGE INFO\n")
@@ -20,7 +20,7 @@ for(pkg in pkgs) {
   suppressWarnings( suppressPackageStartupMessages( stopifnot( library(pkg, quietly=TRUE, logical.return=TRUE, character.only=TRUE))))
 }
 source_local <- function(fname){ argv <- commandArgs(trailingOnly = FALSE); base_dir <- dirname(substring(argv[grep("--file=", argv)], 8)); source(paste(base_dir, fname, sep="/")) }
-cat("\n\n"); 
+cat("\n\n");
 
 
 
@@ -85,13 +85,13 @@ if(exists("singlefile_galaxyPath") && (singlefile_galaxyPath!="")) {
     error_message=paste("Cannot access the sample:",singlefile_sampleName,"located:",singlefile_galaxyPath,". Please, contact your administrator ... if you have one!")
     print(error_message); stop(error_message)
   }
-  
+
   cwd=getwd()
   dir.create("raw")
   setwd("raw")
   file.symlink(singlefile_galaxyPath, singlefile_sampleName)
   setwd(cwd)
-  
+
   directory = "raw"
 }
 
@@ -102,24 +102,24 @@ if(exists("zipfile") && (zipfile!="")) {
     print(error_message)
     stop(error_message)
   }
-  
+
   #list all file in the zip file
   #zip_files=unzip(zipfile,list=T)[,"Name"]
-  
+
   # Because IPO only want raw data in its working directory
   dir.create("ipoworkingdir")
   setwd("ipoworkingdir")
 
   #unzip
   suppressWarnings(unzip(zipfile, unzip="internal"))
-  
+
   #get the directory name
   filesInZip=unzip(zipfile, list=T);
   directories=unique(unlist(lapply(strsplit(filesInZip$Name,"/"), function(x) x[1])));
   directories=directories[!(directories %in% c("__MACOSX")) & file.info(directories)$isdir]
   directory = "."
   if (length(directories) == 1) directory = directories
-  
+
   cat("files_root_directory\t",directory,"\n")
 }
 
@@ -148,9 +148,6 @@ cat("\n\n")
 cat("\tPEAK PICKING INFO\n")
 print(resultPeakpicking)
 
-# Keep results of the best xset
-write.table(t(as.data.frame(resultPeakpicking)), file=parametersOutput,  sep="\t", row.names=T, col.names=F, quote=F)
-
 #saving R data in .Rdata file to save the variables used in the present tool
 objects2save = c("bestXset", "bestXsetParams", "PPscore", "zipfile")
 save(list=objects2save[objects2save %in% ls()], file=optimResultsRdataOutput)
@@ -159,4 +156,3 @@ cat("\n\n")
 
 
 cat("\tDONE\n")
-
