@@ -79,7 +79,8 @@ if (!is.null(listArguments[["singlefile_galaxyPath"]])){
 if(exists("singlefile_galaxyPath") && (singlefile_galaxyPath!="")) {
 
     cwd=getwd()
-    dir.create("raw")
+    if(!dir.exists("raw"))
+      dir.create("raw")
     setwd("raw")
 
     for (singlefile_galaxyPath_i in seq(1:length(singlefile_galaxyPath))) {
@@ -87,7 +88,8 @@ if(exists("singlefile_galaxyPath") && (singlefile_galaxyPath!="")) {
             error_message=paste("Cannot access the sample:",singlefile_sampleName[singlefile_galaxyPath_i],"located:",singlefile_galaxyPath[singlefile_galaxyPath_i],". Please, contact your administrator ... if you have one!")
             print(error_message); stop(error_message)
         }
-        file.symlink(singlefile_galaxyPath[singlefile_galaxyPath_i],singlefile_sampleName[singlefile_galaxyPath_i])
+        if(!file.exists(singlefile_sampleName[singlefile_galaxyPath_i]))
+          file.symlink(singlefile_galaxyPath[singlefile_galaxyPath_i],singlefile_sampleName[singlefile_galaxyPath_i])
     }
 
     setwd(cwd)
@@ -108,7 +110,8 @@ if(exists("zipfile") && (zipfile!="")) {
     #zip_files=unzip(zipfile,list=T)[,"Name"]
 
     # Because IPO only want raw data in its working directory
-    dir.create("ipoworkingdir")
+    if(!dir.exists("ipoworkingdir"))
+      dir.create("ipoworkingdir")
     setwd("ipoworkingdir")
 
     #unzip
