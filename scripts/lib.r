@@ -79,7 +79,7 @@ ipo4xcmsSet = function(directory, parametersOutput, listArguments, samplebyclass
   
   infos = getInfos(mzmlfile)
   # can be read by user
-  write.table(cbind(mzmlfile, infos$instrumentInfo, infos$runInfo, t(as.matrix(resultPeakpicking_best_settings_parameters))), file="testoutput.tsv",  sep="\t", row.names=F, col.names=T, quote=F)
+  write.table(cbind(mzmlfile, infos$instrumentInfo, infos$runInfo, t(as.matrix(resultPeakpicking_best_settings_parameters))), file=parametersOutput,  sep="\t", row.names=F, col.names=T, quote=F)
   
   
   # Returns best settings containing among others:
