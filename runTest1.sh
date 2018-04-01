@@ -5,7 +5,7 @@ apt-get update -y && apt-get install -y --no-install-recommends wget ca-certific
 wget "https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/test-data/MM14.mzML" -O "/usr/local/bin/MM14.mzML"
 
 # Peak picking first
-ipo4xcmsSet.r singlefile_galaxyPath /usr/local/bin/MM14.mzML singlefile_sampleName MM14.mzML parametersOutput MM8_IPO_parameters4xcmsSet.tsv nSlaves 4 minPeakWidth 3,9.5 maxPeakWidth 10,20 ppm 56
+ipo4xcmsSet.r singlefile_galaxyPath /usr/local/bin/MM14.mzML singlefile_sampleName MM14.mzML parametersOutput MM14_IPO_parameters4xcmsSet.tsv nSlaves 4 minPeakWidth 3,9.5 maxPeakWidth 10,20 ppm 56
 
 # Then Grouping
 ipo4retgroup.r image raw/resultPeakpicking.RData parametersOutput MM14_IPO_parameters4retgroup.tsv method density singlefile_galaxyPath /usr/local/bin/MM14.mzML singlefile_sampleName MM14.mzML retcorMethod obiwarp nSlaves 4
