@@ -1,3 +1,22 @@
+
+getInfos = function(mzdatafiles){
+  
+  # Get informations about instruments used and run
+  file.format = c("mzData", "mzdata")
+  if(tools::file_ext(mzdatafiles) %in% file.format){
+    ms = openMSfile(mzdatafiles, backend="Ramp")
+  } else {
+    ms = openMSfile(mzdatafiles)
+  }
+  
+  runInfo = t(sapply(runInfo(ms), function(x) x[1], USE.NAMES=TRUE))
+  instrumentInfo = t(sapply(instrumentInfo(ms), function(x) x, USE.NAMES=TRUE))
+  
+  infos = list("runinfo" = runInfo, "instrumentInfo" = instrumentInfo)
+  return (infos)
+}
+
+
 ##
 ## This function launch IPO functions to get the best parameters for xcmsSet
 ## A sample among the whole dataset is used to save time
@@ -57,7 +76,10 @@ ipo4xcmsSet = function(directory, parametersOutput, listArguments, samplebyclass
   
   # export results
   resultPeakpicking_best_settings_parameters = resultPeakpicking$best_settings$parameters[!(names(resultPeakpicking$best_settings$parameters) %in% c("nSlaves","verbose.columns"))]
-  write.table(t(as.data.frame(resultPeakpicking_best_settings_parameters)), file=parametersOutput,  sep="\t", row.names=T, col.names=F, quote=F)  # can be read by user
+  
+  infos = getInfos(mzmlfile)
+  # can be read by user
+  write.table(cbind(mzmlfile, infos$instrumentInfo, infos$runInfo, t(as.matrix(resultPeakpicking_best_settings_parameters))), file="testoutput.tsv",  sep="\t", row.names=F, col.names=T, quote=F)
   
   
   # Returns best settings containing among others:
@@ -86,6 +108,7 @@ ipo4retgroup = function(xset, directory, parametersOutput, listArguments, sample
   
   # export  best retCor + grouping parameters
   write.table(t(as.data.frame(resultRetcorGroup$best_settings)), file=parametersOutput,  sep="\t", row.names=T, col.names=F, quote=F)  #can be read by user
+
   return (resultRetcorGroup)
 }
 
