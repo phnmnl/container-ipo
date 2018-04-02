@@ -41,7 +41,7 @@
         #end if
 
         parametersOutput $parametersOutput
-        xsetRdataOutput $xsetRData
+        resultPeakpickingRdataOutput $resultPeakpicking
 
         samplebyclass $samplebyclass
 
