@@ -86,7 +86,7 @@ ipo4xcmsSet = function(directory, parametersOutput, listArguments, samplebyclass
   # - Best Xset (xcmsSet object)
   # - Best Xset parameters
   # - PeakPickingScore (PPS)
-  return (resultPeakpicking$best_settings)
+  return (resultPeakpicking)
 }
 
 ##
