@@ -1,9 +1,5 @@
 <tool id="ipo4xcmsSet" name="IPO for xcmsSet" version="0.0.3">
 
-    <requirements>
-        <container type="docker">phnmnl/IPO</container>
-    </requirements>
-
     <description>IPO optimization process for xcms.xcmsSet</description>
 
     <macros>
