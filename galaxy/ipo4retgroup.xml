@@ -49,11 +49,11 @@
 
         ## retcor methods
 
-        #if $retcor.methods.method == "obiwarp":
+        #if $retcor.methods.retcormethod == "obiwarp":
             retcorMethod obiwarp
-            profStep $methods.section_retcor_obiwarp_non_optimizable.profStep
+            profStep $retcor.methods.section_retcor_obiwarp_non_optimizable.profStep
 
-        #elif $retcor.methods.method == "peakgroups":
+        #elif $retcor.methods.retcormethod == "peakgroups":
             retcorMethod loess
             smooth $retcor.methods.section_retcor_peakgroups_non_optimizable.smooth
             extra $retcor.methods.section_retcor_peakgroups_non_optimizable.extra
@@ -61,7 +61,7 @@
             span $retcor.methods.section_retcor_peakgroups_non_optimizable.span
             family $retcor.methods.section_retcor_peakgroups_non_optimizable.family
             plottype $retcor.methods.section_retcor_peakgroups_non_optimizable.plottype
-        #elif $retcor.methods.method == "none":
+        #elif $retcor.methods.retcormethod == "none":
             retcorMethod none
         #end if
 
