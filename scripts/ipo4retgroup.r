@@ -82,8 +82,7 @@ if (!is.null(listArguments[["singlefile_galaxyPath"]])){
 if(exists("singlefile_galaxyPath") && (singlefile_galaxyPath!="")) {
 
     cwd=getwd()
-    if(!dir.exists("raw"))
-      dir.create("raw")
+    dir.create("raw")
     setwd("raw")
 
     for (singlefile_galaxyPath_i in seq(1:length(singlefile_galaxyPath))) {
@@ -91,14 +90,12 @@ if(exists("singlefile_galaxyPath") && (singlefile_galaxyPath!="")) {
             error_message=paste("Cannot access the sample:",singlefile_sampleName[singlefile_galaxyPath_i],"located:",singlefile_galaxyPath[singlefile_galaxyPath_i],". Please, contact your administrator ... if you have one!")
             print(error_message); stop(error_message)
         }
-        if(!file.exists(singlefile_sampleName[singlefile_galaxyPath_i]))
-          file.symlink(singlefile_galaxyPath[singlefile_galaxyPath_i],singlefile_sampleName[singlefile_galaxyPath_i])
+        file.symlink(singlefile_galaxyPath[singlefile_galaxyPath_i],singlefile_sampleName[singlefile_galaxyPath_i])
     }
 
     setwd(cwd)
 
     directory = "raw"
-
 }
 
 # We unzip automatically the chromatograms from the zip files.
