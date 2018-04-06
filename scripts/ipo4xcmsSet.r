@@ -2,6 +2,9 @@
 #Authors Gildas Le Corguille and Yann Guitton
 
 
+# Setup R error handling to go to stderr for better error messages in Galaxy
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+
 # ----- LOG FILE -----
 log_file=file("log.txt", open = "wt")
 sink(log_file)
@@ -136,10 +139,6 @@ cat("\tMAIN PROCESSING INFO\n")
 
 resultPeakpicking = ipo4xcmsSet(directory, parametersOutput, listArguments, samplebyclass)
 
-#Important results
-bestXset = resultPeakpicking$xset
-bestXsetParams = resultPeakpicking$parameters
-PPscore = resultPeakpicking$results[["PPS"]]
 cat("\n\n")
 
 
@@ -149,7 +148,7 @@ cat("\tPEAK PICKING INFO\n")
 print(resultPeakpicking)
 
 #saving R data in .Rdata file to save the variables used in the present tool
-objects2save = c("bestXset", "bestXsetParams", "PPscore", "zipfile")
+objects2save = c("resultPeakpicking", "zipfile")
 save(list=objects2save[objects2save %in% ls()], file=optimResultsRdataOutput)
 
 cat("\n\n")
