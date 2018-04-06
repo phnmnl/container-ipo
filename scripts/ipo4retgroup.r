@@ -136,15 +136,11 @@ checkFilesCompatibilityWithXcms(directory)
 cat("\n\n")
 
 
-
-
-
-
 # ----- MAIN PROCESSING INFO -----
 cat("\tMAIN PROCESSING INFO\n")
 
 
-resultRetcorGroup = ipo4retgroup(bestXset, directory, parametersOutput, listArguments, samplebyclass)
+resultRetcorGroup = ipo4retgroup(resultPeakpicking$best_settings$xset, directory, parametersOutput, listArguments, samplebyclass)
 
 print(resultRetcorGroup)
 
