@@ -45,12 +45,13 @@ source_local("lib.r")
 
 cat("\n\n")
 
-#Import the different functions
-
 # ----- PROCESSING INFILE -----
 cat("\tARGUMENTS PROCESSING INFO\n")
 
-retCorParamRdataOutput = paste("ipo4retgroup","RData",sep=".")
+optimResultsRdataOutput = paste("resultRetcorGroup","RData",sep=".")
+if (!is.null(listArguments[["optimResultsRdataOutput"]])){
+  optimResultsRdataOutput = listArguments[["optimResultsRdataOutput"]]; listArguments[["optimResultsRdataOutput"]]=NULL
+}
 
 parametersOutput = "parametersOutput.tsv"
 if (!is.null(listArguments[["parametersOutput"]])){
