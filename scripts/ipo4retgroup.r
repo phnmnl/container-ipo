@@ -159,7 +159,7 @@ cat("\n\n")
 cat("\tEXPORTING INFO\n")
 
 # Save current workspace
-save.image(file="resultRetCor.RData")
+save("resultRetcorGroup", file=optimResultsRdataOutput)
 
 cat("\n\n")
 
