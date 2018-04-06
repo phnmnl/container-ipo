@@ -21,8 +21,16 @@
         LANG=C Rscript $__tool_directory__/ipo4retgroup.r
 
         image '$image'
+        
+        #if $input.is_of_type("mzxml") or $input.is_of_type("mzml") or $input.is_of_type("mzdata") or $input.is_of_type("netcdf"):
+            singlefile_galaxyPath '$input' singlefile_sampleName '$input.name'
+        #else
+            zipfile '$input'
+        #end if
 
         parametersOutput '$parametersOutput'
+        
+        optimResultsRdataOutput $resultRetcorGroup
 
         samplebyclass $samplebyclass
 
