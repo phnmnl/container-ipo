@@ -1,9 +1,5 @@
 <tool id="ipo4retgroup" name="IPO for group and retcor" version="0.0.1">
 
-    <requirements>
-        <container type="docker">phnmnl/IPO</container>
-    </requirements>
-    
     <description>IPO optimization process for xcms.group and xcms.retcor</description>
 
     <macros>
