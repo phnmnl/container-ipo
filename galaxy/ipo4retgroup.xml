@@ -151,7 +151,7 @@
     </inputs>
 
     <outputs>
-        <data name="resultRetCor" format="rdata.xcms.raw" label="resultRetCor.RData" />
+        <data name="resultRetcorGroup" format="rdata" label="resultRetcorGroup.RData" />
         <data name="parametersOutput" format="tabular" label="IPO_parameters4retcor.tsv" />
         <data name="log" format="txt" label="ipo4retcor.log.txt" />
     </outputs>
