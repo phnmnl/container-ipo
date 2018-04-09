@@ -53,7 +53,7 @@ if (!is.null(listArguments[["optimResultsRdataOutput"]])){
   optimResultsRdataOutput = listArguments[["optimResultsRdataOutput"]]; listArguments[["optimResultsRdataOutput"]]=NULL
 }
 
-parametersOutput = "parametersOutput.tsv"
+parametersOutput = "IPO_parameters4retcorGroup.tsv"
 if (!is.null(listArguments[["parametersOutput"]])){
   parametersOutput = listArguments[["parametersOutput"]]; listArguments[["parametersOutput"]]=NULL
 }
