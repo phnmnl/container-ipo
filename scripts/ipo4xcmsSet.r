@@ -114,7 +114,7 @@ if(exists("zipfile") && (zipfile!="")) {
   setwd("ipoworkingdir")
 
   #unzip
-  suppressWarnings(unzip(zipfile, unzip="internal"))
+  suppressWarnings(unzip(zipfile, unzip=getOption("unzip")))
 
   #get the directory name
   filesInZip=unzip(zipfile, list=T);
