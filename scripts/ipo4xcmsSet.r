@@ -148,8 +148,13 @@ cat("\tPEAK PICKING INFO\n")
 print(resultPeakpicking)
 
 #saving R data in .Rdata file to save the variables used in the present tool
+# for further global analysis
 objects2save = c("resultPeakpicking", "zipfile")
 save(list=objects2save[objects2save %in% ls()], file=optimResultsRdataOutput)
+
+#Save the best xcmsSet alone for the next tool
+xset = resultPeakpicking$best_settings$xset
+save("xset", file="best_xcmsSet.RData")
 
 cat("\n\n")
 
