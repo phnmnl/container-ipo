@@ -357,9 +357,14 @@ Extraction method for peaks detection
 Output files
 ------------
 
-IPO_parameters4xcmsSet.tsv
+IPO_parameters4retcorGroup.tsv
 
     | Optimal parameters for xcmsSet
+
+resultRetcorGroup.RData
+
+    | Results of retcor and grouping optimization with R objects
+
 
 
 ---------------------------------------------------
