@@ -23,7 +23,7 @@ for index in `seq 1 3`; do
 done
 
 # check that RData files have been created
-if [ ! -f raw/resultPeakpicking.RData ] || [ ! -f raw/resultRetCorGroup.RData ]; then
+if [ ! -f raw/resultPeakpicking.RData ] || [ ! -f raw/resultRetcorGroup.RData ]; then
 	echo "RData files not found, failing test"
 	exit 1
 fi
