@@ -48,11 +48,6 @@ cat("\n\n")
 # ----- PROCESSING INFILE -----
 cat("\tARGUMENTS PROCESSING INFO\n")
 
-optimResultsRdataOutput = paste("resultRetcorGroup","RData",sep=".")
-if (!is.null(listArguments[["optimResultsRdataOutput"]])){
-  optimResultsRdataOutput = listArguments[["optimResultsRdataOutput"]]; listArguments[["optimResultsRdataOutput"]]=NULL
-}
-
 parametersOutput = "IPO_parameters4retcorGroup.tsv"
 if (!is.null(listArguments[["parametersOutput"]])){
   parametersOutput = listArguments[["parametersOutput"]]; listArguments[["parametersOutput"]]=NULL
@@ -115,7 +110,7 @@ if(exists("zipfile") && (zipfile!="")) {
     setwd("ipoworkingdir")
 
     #unzip
-    suppressWarnings(unzip(zipfile, unzip="internal"))
+    suppressWarnings(unzip(zipfile, unzip=getOption("unzip")))
 
     #get the directory name
     filesInZip=unzip(zipfile, list=T);
@@ -140,21 +135,8 @@ cat("\n\n")
 cat("\tMAIN PROCESSING INFO\n")
 
 
-resultRetcorGroup = ipo4retgroup(resultPeakpicking$best_settings$xset, directory, parametersOutput, listArguments, samplebyclass)
-
-print(resultRetcorGroup)
+ipo4retgroup(resultPeakpicking$best_settings$xset, directory, parametersOutput, listArguments, samplebyclass)
 
 cat("\n\n")
-
-
-# ----- EXPORT -----
-
-cat("\tEXPORTING INFO\n")
-
-# Save current workspace
-save("resultRetcorGroup", file=optimResultsRdataOutput)
-
-cat("\n\n")
-
 
 cat("\tDONE\n")

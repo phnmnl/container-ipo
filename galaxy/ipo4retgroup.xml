@@ -30,8 +30,6 @@
 
         parametersOutput '$parametersOutput'
         
-        optimResultsRdataOutput $resultRetcorGroup
-
         samplebyclass $samplebyclass
 
         @COMMAND_NSLAVES@
@@ -151,8 +149,7 @@
     </inputs>
 
     <outputs>
-        <data name="resultRetcorGroup" format="rdata" label="resultRetcorGroup.RData" />
-        <data name="parametersOutput" format="tabular" label="IPO_parameters4retcor.tsv" />
+        <data name="parametersOutput" format="tabular" label="IPO_parameters4retcorGroup.tsv" />
         <data name="log" format="txt" label="ipo4retcor.log.txt" />
     </outputs>
 
@@ -190,7 +187,7 @@
             </section>
             <section name="retcor">
                 <conditional name="methods">
-                    <param name="method" value="peakgroups"/>
+                    <param name="retcormethod" value="peakgroups"/>
                     <section name="section_retcor_peakgroups_non_optimizable">
                         <param name="smooth" value="loess"/>
                         <param name="rextra" value="1"/>
@@ -208,7 +205,7 @@
             <param name="group|methods|bw" value="30"/>
             <param name="group|methods|minfrac" value="1"/>
             <param name="group|methods|mzwid" value="0.15,0.35"/>
-            <param name="retcor|methods|method" value="peakgroups"/>
+            <param name="retcor|methods|retcormethod" value="peakgroups"/>
             <param name="retcor|methods|smooth" value="loess"/>
             <param name="retcor|methods|extra" value="1"/>
             <param name="retcor|methods|missing" value="1"/>
@@ -222,7 +219,7 @@
             <param name="group|methods|bw" value="22,38"/>
             <param name="group|methods|minfrac" value="1"/>
             <param name="group|methods|mzwid" value="0.015,0.035"/>
-            <param name="retcor|methods|method" value="peakgroups"/>
+            <param name="retcor|methods|retcormethod" value="peakgroups"/>
             <param name="retcor|methods|smooth" value="loess"/>
             <param name="retcor|methods|extra" value="1"/>
             <param name="retcor|methods|missing" value="1"/>
@@ -360,10 +357,6 @@ Output files
 IPO_parameters4retcorGroup.tsv
 
     | Optimal parameters for xcmsSet
-
-resultRetcorGroup.RData
-
-    | Results of retcor and grouping optimization with R objects
 
 
 
