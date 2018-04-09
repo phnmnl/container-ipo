@@ -369,6 +369,10 @@ IPO_parameters4xcmsSet.tsv
 
     | Optimal parameters for xcmsSet
 
+resultPeakpicking.RData
+
+    | Peak picking results with R objects
+
 
 ---------------------------------------------------
 
