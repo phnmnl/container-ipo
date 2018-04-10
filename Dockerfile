@@ -18,7 +18,7 @@ RUN chmod +x /usr/local/bin/*
 #ADD https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/lib.r /usr/local/bin/
 
 # Install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev libcurl4-openssl-dev libnetcdf-dev libssl-dev libssh2-1-dev libxml2-dev icu-devtools netcdf-bin r-base r-base-dev && \
+RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev libcurl4-openssl-dev libnetcdf-dev libssl-dev libssh2-1-dev libxml2-dev libxml2-utils icu-devtools netcdf-bin r-base r-base-dev && \
 	echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site && \
 	Rscript /usr/local/bin/installIPO.R && \
 	R -e 'remove.packages(c("devtools"))' && \
