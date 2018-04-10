@@ -135,7 +135,7 @@ cat("\n\n")
 cat("\tMAIN PROCESSING INFO\n")
 
 
-ipo4retgroup(resultPeakpicking$best_settings$xset, directory, parametersOutput, listArguments, samplebyclass)
+ipo4retgroup(xset, directory, parametersOutput, listArguments, samplebyclass)
 
 cat("\n\n")
 
