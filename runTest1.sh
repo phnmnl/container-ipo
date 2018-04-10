@@ -8,7 +8,7 @@ wget "https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/
 ipo4xcmsSet.r singlefile_galaxyPath /usr/local/bin/MM14.mzML singlefile_sampleName MM14.mzML parametersOutput MM14_IPO_parameters4xcmsSet.tsv nSlaves 4 minPeakWidth 3,9.5 maxPeakWidth 10,20 ppm 56
 
 # Then Grouping
-ipo4retgroup.r image raw/resultPeakpicking.RData parametersOutput MM14_IPO_parameters4retgroup.tsv method density singlefile_galaxyPath /usr/local/bin/MM14.mzML singlefile_sampleName MM14.mzML retcorMethod obiwarp nSlaves 4
+ipo4retgroup.r image raw/best_xcmsSet.RData parametersOutput MM14_IPO_parameters4retcorGroup.tsv method density singlefile_galaxyPath /usr/local/bin/MM14.mzML singlefile_sampleName MM14.mzML retcorMethod obiwarp nSlaves 4
 
 # check that JPGs graphs have been created
 for index in `seq 1 3`; do
@@ -23,13 +23,13 @@ for index in `seq 1 3`; do
 done
 
 # check that RData files have been created
-if [ ! -f raw/resultPeakpicking.RData ] || [ ! -f raw/resultRetcorGroup.RData ]; then
+if [ ! -f raw/resultPeakpicking.RData ] || [ ! -f raw/best_xcmsSet.RData ]; then
 	echo "RData files not found, failing test"
 	exit 1
 fi
 
 # check that tsv files have been created
-if [ ! -f raw/MM14_IPO_parameters4xcmsSet.tsv ] || [ ! -f raw/MM14_IPO_parameters4retgroup.tsv ]; then
+if [ ! -f raw/MM14_IPO_parameters4xcmsSet.tsv ] || [ ! -f raw/MM14_IPO_parameters4retcorGroup.tsv ]; then
 	echo "tsv files not found, failing test"
 	exit 1
 fi
