@@ -1,4 +1,7 @@
-
+##
+## This function retrieves runinfos and instrument infos from
+## mzfile given in argument
+##
 getInfos = function(mzdatafiles){
   
   # Get informations about instruments used and run
