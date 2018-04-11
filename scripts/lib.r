@@ -15,7 +15,7 @@ getInfos = function(mzdatafiles){
   runInfo = t(sapply(runInfo(ms), function(x) x[1], USE.NAMES=TRUE))
   instrumentInfo = t(sapply(instrumentInfo(ms), function(x) x, USE.NAMES=TRUE))
   
-  infos = list("runinfo" = runInfo, "instrumentInfo" = instrumentInfo)
+  infos = list("runInfo" = runInfo, "instrumentInfo" = instrumentInfo)
   return (infos)
 }
 
