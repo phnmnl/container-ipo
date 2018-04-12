@@ -56,8 +56,16 @@ IPO was successfully applied to data derived from liquid chromatography coupled 
 
 ## Usage Instructions
 
+This container is integrated and available in the Galaxy interface of Phenomenal, but you can still use it locally for testing by simply overriding the entrypoint of the Dockerfile as described below:
 
-On the main directory, to build the image:
+### Method using the git repo
+
+You can clone this git repository with:
+```
+git clone https://github.com/phnmnl/container-ipo.git
+```
+
+Then on the main directory of your local git repo, build the image:
 ```
 docker build -t ipo .
 ```
@@ -65,19 +73,41 @@ docker build -t ipo .
 And then to run:
 
 ```
-docker run ipo -i /complete/path/to/filesPaths -o /complete/path/to/out
+docker run --entrypoint "runIPO.R" ipo -i /complete/path/to/filesPaths -o /complete/path/to/out
 ```
 
 On Mac OS X with docker-machine, because there is this intermediate VM, it is recommended to mount a high level directory on docker (as /Users, which will be already mounted on the docker-machine VM.
 
 ```
-docker run -v /Users:/Users ipo -i /Users/yourUser/path/to/filesPaths -o /Users/yourUser/path/to/out
+docker run --entrypoint "runIPO.R" -v /Users:/Users ipo -i /Users/yourUser/path/to/filesPaths -o /Users/yourUser/path/to/out
 ```
 
 IPO has a number of options, which we have wrapped for you, to find them out please execute:
 
 ```
-docker run ipo
+docker run --entrypoint "runIPO.R" ipo
+```
+
+### Method using the Phenomenal docker container
+
+You can pull the container from the Phenomenal official docker registry:
+```
+docker pull container-registry.phenomenal-h2020.eu/phnmnl/ipo
+```
+
+For convenience you can rename the repository with a shorter tag:
+```
+docker tag container-registry.phenomenal-h2020.eu/phnmnl/ipo:latest <short_fancy_name>:latest
+```
+
+Since the tool is now in a docker container we need to mount the folder containing the testing data so that the container has access to the "outside world":
+```
+docker run --entrypoint "runIPO.R" -v /complete/local/path/to/dir:/path/in/container <short_fancy_name> -i /path/in/container/to/filesPaths -o /path/in/container/to/out
+```
+
+To get all the options available give no arguments:
+```
+docker run --entrypoint "runIPO.R" <short_fancy_name>
 ```
 
 ## Publications
