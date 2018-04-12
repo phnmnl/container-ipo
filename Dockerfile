@@ -20,9 +20,10 @@ RUN chmod +x /usr/local/bin/*
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends libboost-dev libcurl4-openssl-dev libnetcdf-dev libssl-dev libssh2-1-dev libxml2-dev libxml2-utils icu-devtools netcdf-bin r-base r-base-dev && \
 	echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site && \
-	Rscript /usr/local/bin/installIPO.R && \
+	R -e 'source("https://bioconductor.org/biocLite.R"); install.packages("devtools"); library("devtools"); install_github("sneumann/mzR"); install.packages("batch"); install.packages("rsm"); install.packages("optparse");' && \
+    R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("IPO");' && \
 	R -e 'remove.packages(c("devtools"))' && \
-    	apt-get purge -y r-base-dev git libcurl4-openssl-dev libssl-dev libssh2-1-dev r-base-dev libboost-dev && \
+    apt-get purge -y r-base-dev git libcurl4-openssl-dev libssl-dev libssh2-1-dev r-base-dev libboost-dev && \
 	apt-get clean && apt-get autoremove -y && rm -rf /var/lib/{cache,log}/ /tmp/* /var/tmp/*
 
 # Add testing to container
