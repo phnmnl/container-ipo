@@ -154,7 +154,7 @@ save(list=objects2save[objects2save %in% ls()], file=optimResultsRdataOutput)
 
 #Save the best xcmsSet alone for the next tool
 xset = resultPeakpicking$best_settings$xset
-save("xset", file="../../best_xcmsSet.RData")
+save("xset", file="best_xcmsSet.RData")
 cat("\n\n")
 
 
