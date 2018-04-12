@@ -43,7 +43,7 @@ cat("\tINFILE PROCESSING INFO\n")
 
 #Import the different functions
 source_local("lib.r")
-
+root_work_dir = getwd()
 cat("\n\n")
 
 #Import the different functions
@@ -154,6 +154,8 @@ save(list=objects2save[objects2save %in% ls()], file=optimResultsRdataOutput)
 
 #Save the best xcmsSet alone for the next tool
 xset = resultPeakpicking$best_settings$xset
+
+setwd(root_work_dir)
 save("xset", file="best_xcmsSet.RData")
 cat("\n\n")
 
