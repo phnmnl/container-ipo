@@ -87,7 +87,10 @@
 
 **Galaxy integration** ABiMS TEAM - UPMC/CNRS - Station biologique de Roscoff and Yann Guitton yann.guitton@oniris-nantes.fr - part of Workflow4Metabolomics.org [W4M]
 
- | Contact support@workflow4metabolomics.org for any questions or concerns about the Galaxy implementation of this tool.
+.. class:: infomark
+
+**PhenoMeNal integration**  Gabriel Cretin (gcretin@ipb-halle.de) Adapted the galaxy wrappers from W4M for the integration of the tool into PhenoMeNal
+
 
 ---------------------------------------------------
 
