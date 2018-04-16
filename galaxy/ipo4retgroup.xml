@@ -18,7 +18,7 @@
     <expand macro="stdio"/>
 
     <command><![CDATA[
-        LANG=C Rscript $__tool_directory__/ipo4retgroup.r
+        LANG=C ipo4retgroup.r
 
         image '$image'
         

@@ -28,7 +28,7 @@
     <expand macro="stdio"/>
 
     <command><![CDATA[
-        LANG=C Rscript $__tool_directory__/ipo4xcmsSet.r
+        LANG=C ipo4xcmsSet.r
 
         #if $input.is_of_type("mzxml") or $input.is_of_type("mzml") or $input.is_of_type("mzdata") or $input.is_of_type("netcdf"):
             singlefile_galaxyPath '$input' singlefile_sampleName '$input.name'
