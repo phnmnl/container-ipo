@@ -6,7 +6,13 @@ MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 LABEL software=IPO
 LABEL software.version=1.4.1
-LABEL version=0.4
+LABEL version=0.5
+LABEL base.image="container-registry.phenomenal-h2020.eu/phnmnl/xcms"
+LABEL description="A Tool for automated Optimization of XCMS Parameters"
+LABEL website="https://github.com/phnmnl/container-ipo"
+LABEL documentation="https://github.com/phnmnl/container-ipo"
+LABEL license="https://github.com/phnmnl/container-ipo/blob/develop/LICENSE"
+LABEL tags="Metabolomics"
 
 # Add IPO scripts and W4M wrapper to path
 ADD scripts/* /usr/local/bin/
