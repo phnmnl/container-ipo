@@ -2,8 +2,8 @@
 ## This function retrieves runinfos and instrument infos from
 ## mzfile given in argument
 ##
-getInfos = function(mzdatafiles){
-  
+getInfos <- function(mzdatafiles) {
+
   # Get informations about instruments used and run
   if (tools::file_ext(mzdatafiles) %in% c("mzData", "mzdata")) {
     ms <- openMSfile(mzdatafiles, backend = "Ramp")
@@ -12,118 +12,140 @@ getInfos = function(mzdatafiles){
   } else {
     ms <- openMSfile(mzdatafiles)
   }
-  
-  runInfo = t(sapply(runInfo(ms), function(x) x[1], USE.NAMES=TRUE))
-  instrumentInfo = t(sapply(instrumentInfo(ms), function(x) x, USE.NAMES=TRUE))
-  
-  infos = list("runInfo" = runInfo, "instrumentInfo" = instrumentInfo)
-  return (infos)
+
+  runInfo <- t(sapply(runInfo(ms), function(x) x[1], USE.NAMES = TRUE))
+  instrumentInfo <- t(sapply(instrumentInfo(ms), function(x) x, USE.NAMES = TRUE))
+
+  infos <- list("runInfo" = runInfo, "instrumentInfo" = instrumentInfo)
+  return(infos)
 }
 
 
 ##
 ## This function launch IPO functions to get the best parameters for xcmsSet
-## A sample among the whole dataset is used to save time
+## 5% but at least 10 files of the whole dataset is used to save processing time
 ##
-ipo4xcmsSet = function(directory, parametersOutput, listArguments, samplebyclass=4) {
+ipo4xcmsSet <- function(directory, parametersOutput, listArguments) {
   setwd(directory)
-  
-  files = list.files(".", recursive=T)  # "KO/ko15.CDF" "KO/ko16.CDF" "WT/wt15.CDF" "WT/wt16.CDF"
-  files_classes = basename(dirname(files))    # "KO", "KO", "WT", "WT"
-  
-  mzmlfiles = files
+
+  files <- list.files(".", recursive = T)
+
+  # Check if there are blank files
+  # TODO Change the method retrieving blank samples, with a more "official way" then "grep"
+  #      - To improve in the future, when new specifications of ISA-Tab make it easier to detect blanks
+  blank.files <- grep("blan(k|c)", files, ignore.case = TRUE, value = TRUE)
+  # Keep only QCs or pool files if possible since they are more representative of the experimental study
+  representative.files <- grep("(QC)|(pool)", files, ignore.case = TRUE, value = TRUE)
+  if (length(representative.files) != 0) { # If pools or QC, keep only them
+    file.copy(representative.files, assay.folder)
+    if (length(blank.files) != 0) { # Keep also blanks if there are
+      file.copy(blank.files, assay.folder)
+    }
+  } else {
+    # To reduce processing time, keep 5% but at least 10 raw data files of the assay
+    if (ceiling((5 * length(files)) / 100) < 10) {
+      files <- sample(files, 10)
+    } else {
+      files <- sample(files, ceiling((5 * length(files)) / 100))
+    }
+    file.copy(files, assay.folder)
+  }
+
+  mzmlfiles <- files
   if (samplebyclass > 0) {
-    #random selection of N files for IPO in each class
-    classes<-unique(basename(dirname(files)))
-    mzmlfiles = NULL
-    for (class_i in classes){
-      files_class_i = files[files_classes==class_i]
+    # random selection of N files for IPO in each class
+    classes <- unique(basename(dirname(files)))
+    mzmlfiles <- NULL
+    for (class_i in classes) {
+      files_class_i <- files[files_classes == class_i]
       if (samplebyclass > length(files_class_i)) {
-        mzmlfiles = c(mzmlfiles, files_class_i)
+        mzmlfiles <- c(mzmlfiles, files_class_i)
       } else {
-        mzmlfiles = c(mzmlfiles,sample(files_class_i,samplebyclass))
+        mzmlfiles <- c(mzmlfiles, sample(files_class_i, samplebyclass))
       }
     }
   }
-  #@TODO: else, must we keep the RData to been use directly by group?
-  
+  # @TODO: else, must we keep the RData to been use directly by group?
+
   cat("\t\tSamples used:\n")
   print(mzmlfiles)
-  
-  peakpickingParameters = getDefaultXcmsSetStartingParams(listArguments[["method"]]) #get default parameters of IPO
-  
+
+  peakpickingParameters <- getDefaultXcmsSetStartingParams(listArguments[["method"]]) # get default parameters of IPO
+
   # filter listArguments to only get releavant parameters and complete with those that are not declared
-  peakpickingParametersUser = c(listArguments[names(listArguments) %in% names(peakpickingParameters)], peakpickingParameters[!(names(peakpickingParameters) %in% names(listArguments))])
-  peakpickingParametersUser$verbose.columns = TRUE
-  
+  peakpickingParametersUser <- c(listArguments[names(listArguments) %in% names(peakpickingParameters)], peakpickingParameters[!(names(peakpickingParameters) %in% names(listArguments))])
+  peakpickingParametersUser$verbose.columns <- TRUE
+
   # allow range for min and max peakwidth and ppm if given in arguments
-  if (!is.null(listArguments[["minPeakWidth"]])){
-    peakpickingParametersUser$min_peakwidth = as.vector(as.numeric(unlist(strsplit(listArguments[["minPeakWidth"]],split = ","))))
-    listArguments[["minPeakWidth"]] = NULL
+  if (!is.null(listArguments[["minPeakWidth"]])) {
+    peakpickingParametersUser$min_peakwidth <- as.vector(as.numeric(unlist(strsplit(listArguments[["minPeakWidth"]], split = ","))))
+    listArguments[["minPeakWidth"]] <- NULL
   }
-  
-  if (!is.null(listArguments[["maxPeakWidth"]])){
-    peakpickingParametersUser$max_peakwidth = as.vector(as.numeric(unlist(strsplit(listArguments[["maxPeakWidth"]],split = ","))))
-    listArguments[["maxPeakWidth"]] = NULL 
+
+  if (!is.null(listArguments[["maxPeakWidth"]])) {
+    peakpickingParametersUser$max_peakwidth <- as.vector(as.numeric(unlist(strsplit(listArguments[["maxPeakWidth"]], split = ","))))
+    listArguments[["maxPeakWidth"]] <- NULL
   }
-  
-  if (!is.null(listArguments[["ppm"]])){
-    if(grepl(",", listArguments[["ppm"]]))
-      peakpickingParametersUser$ppm = as.vector(as.numeric(unlist(strsplit(listArguments[["ppm"]],split = ","))))
-    else
-      peakpickingParametersUser$ppm = listArguments[["ppm"]]
-    listArguments[["ppm"]] = NULL
+
+  if (!is.null(listArguments[["ppm"]])) {
+    if (grepl(",", listArguments[["ppm"]])) {
+      peakpickingParametersUser$ppm <- as.vector(as.numeric(unlist(strsplit(listArguments[["ppm"]], split = ","))))
+    } else {
+      peakpickingParametersUser$ppm <- listArguments[["ppm"]]
+    }
+    listArguments[["ppm"]] <- NULL
   }
-  
+
   # peakpickingParametersUser$profparam <- list(step=0.005) #not yet used by IPO have to think of it for futur improvement
-  resultPeakpicking = optimizeXcmsSet(mzmlfiles, peakpickingParametersUser, nSlaves=peakpickingParametersUser$nSlaves, subdir="../IPO_results") #some images generated by IPO
-  
+  resultPeakpicking <- optimizeXcmsSet(mzmlfiles, peakpickingParametersUser, nSlaves = peakpickingParametersUser$nSlaves, subdir = "../IPO_results") # some images generated by IPO
+
   # Export results
-  resultPeakpicking_best_settings_parameters = resultPeakpicking$best_settings$parameters[!(names(resultPeakpicking$best_settings$parameters) %in% c("nSlaves","verbose.columns"))]
-  
+  resultPeakpicking_best_settings_parameters <- resultPeakpicking$best_settings$parameters[!(names(resultPeakpicking$best_settings$parameters) %in% c("nSlaves", "verbose.columns"))]
+
   # Export:
   # - TSV output for run / instrument informations of all files in the dataset
   # - TSV output for best settings parameters
-  table = NULL
-  for (filename in mzmlfiles){
-    one.file.infos = getInfos(filename)
-    infos = cbind(filename, one.file.infos$instrumentInfo, one.file.infos$runInfo)
-    table = rbind(table, infos)
+  table <- NULL
+  for (filename in mzmlfiles) {
+    one.file.infos <- getInfos(filename)
+    infos <- cbind(filename, one.file.infos$instrumentInfo, one.file.infos$runInfo)
+    table <- rbind(table, infos)
   }
   # Change output files path in case of zip file
-  if(grepl("ipoworkingdir",getwd()))
-    write.table(table, file="../../run_instrument_infos.tsv", sep="\t", row.names=F, col.names=T, quote=F)
-  else
-    write.table(table, file="../run_instrument_infos.tsv", sep="\t", row.names=F, col.names=T, quote=F)
-  
-  write.table(as.matrix(resultPeakpicking_best_settings_parameters), file=parametersOutput, sep="\t", row.names=T, col.names=F, quote=F)
-  
+  if (grepl("ipoworkingdir", getwd())) {
+    write.table(table, file = "../../run_instrument_infos.tsv", sep = "\t", row.names = F, col.names = T, quote = F)
+  } else {
+    write.table(table, file = "../run_instrument_infos.tsv", sep = "\t", row.names = F, col.names = T, quote = F)
+  }
+
+  write.table(as.matrix(resultPeakpicking_best_settings_parameters), file = parametersOutput, sep = "\t", row.names = T, col.names = F, quote = F)
+
   # Returns best settings containing among others:
   # - Best Xset (xcmsSet object)
   # - Best Xset parameters
   # - PeakPickingScore (PPS)
-  return (resultPeakpicking)
+  return(resultPeakpicking)
 }
 
 ##
 ## This function launch IPO functions to get the best parameters for group and retcor
 ##
-ipo4retgroup = function(xset, directory, parametersOutput, listArguments, samplebyclass=4) {
+ipo4retgroup <- function(xset, directory, parametersOutput, listArguments, samplebyclass=4) {
   setwd(directory)
-  
-  files = list.files(".", recursive=T)  # "KO/ko15.CDF" "KO/ko16.CDF" "WT/wt15.CDF" "WT/wt16.CDF"
-  files_classes = basename(dirname(files))    # "KO", "KO", "WT", "WT"
-  
-  retcorGroupParameters = getDefaultRetGroupStartingParams(listArguments[["retcorMethod"]]) #get default parameters of IPO
+
+  files <- list.files(".", recursive = T) # "KO/ko15.CDF" "KO/ko16.CDF" "WT/wt15.CDF" "WT/wt16.CDF"
+  files_classes <- basename(dirname(files)) # "KO", "KO", "WT", "WT"
+
+  retcorGroupParameters <- getDefaultRetGroupStartingParams(listArguments[["retcorMethod"]]) # get default parameters of IPO
   print(retcorGroupParameters)
   # filter listArguments to only get releavant parameters and complete with those that are not declared
-  retcorGroupParametersUser = c(listArguments[names(listArguments) %in% names(retcorGroupParameters)], retcorGroupParameters[!(names(retcorGroupParameters) %in% names(listArguments))])
+  retcorGroupParametersUser <- c(listArguments[names(listArguments) %in% names(retcorGroupParameters)], retcorGroupParameters[!(names(retcorGroupParameters) %in% names(listArguments))])
   print("retcorGroupParametersUser")
   print(retcorGroupParametersUser)
-  resultRetcorGroup = optimizeRetGroup(xset, retcorGroupParametersUser, nSlaves=listArguments[["nSlaves"]], subdir="../IPO_results") #some images generated by IPO
-  
+  resultRetcorGroup <- optimizeRetGroup(xset, retcorGroupParametersUser, nSlaves = listArguments[["nSlaves"]], subdir = "../IPO_results") # some images generated by IPO
+
   # Export  best retCor + grouping parameters
-    write.table(t(as.data.frame(resultRetcorGroup$best_settings)), file=parametersOutput, sep="\t", row.names=T, col.names=F, quote=F)  #can be read by user
+  write.table(t(as.data.frame(resultRetcorGroup$best_settings)), file = parametersOutput, sep = "\t", row.names = T, col.names = F, quote = F) # can be read by user
 }
 
 
@@ -132,30 +154,29 @@ ipo4retgroup = function(xset, directory, parametersOutput, listArguments, sample
 ##
 ## This function check if xcms will found all the files
 ##
-#@author Gildas Le Corguille lecorguille@sb-roscoff.fr ABiMS TEAM
+# @author Gildas Le Corguille lecorguille@sb-roscoff.fr ABiMS TEAM
 checkFilesCompatibilityWithXcms <- function(directory) {
   cat("Checking files filenames compatibilities with xmcs...\n")
   # WHAT XCMS WILL FIND
-  filepattern <- c("[Cc][Dd][Ff]", "[Nn][Cc]", "([Mm][Zz])?[Xx][Mm][Ll]","[Mm][Zz][Dd][Aa][Tt][Aa]", "[Mm][Zz][Mm][Ll]")
-  filepattern <- paste(paste("\\.", filepattern, "$", sep = ""),collapse = "|")
+  filepattern <- c("[Cc][Dd][Ff]", "[Nn][Cc]", "([Mm][Zz])?[Xx][Mm][Ll]", "[Mm][Zz][Dd][Aa][Tt][Aa]", "[Mm][Zz][Mm][Ll]")
+  filepattern <- paste(paste("\\.", filepattern, "$", sep = ""), collapse = "|")
   info <- file.info(directory)
-  listed <- list.files(directory[info$isdir], pattern = filepattern,recursive = TRUE, full.names = TRUE)
+  listed <- list.files(directory[info$isdir], pattern = filepattern, recursive = TRUE, full.names = TRUE)
   files <- c(directory[!info$isdir], listed)
   files_abs <- file.path(getwd(), files)
   exists <- file.exists(files_abs)
   files[exists] <- files_abs[exists]
-  files[exists] <- sub("//","/",files[exists])
-  
+  files[exists] <- sub("//", "/", files[exists])
+
   # WHAT IS ON THE FILESYSTEM
-  filesystem_filepaths=system(paste("find $PWD/",directory," -not -name '\\.*' -not -path '*conda-env*' -type f -name \"*\"", sep=""), intern=T)
-  filesystem_filepaths=filesystem_filepaths[grep(filepattern, filesystem_filepaths, perl=T)]
-  
+  filesystem_filepaths <- system(paste("find $PWD/", directory, " -not -name '\\.*' -not -path '*conda-env*' -type f -name \"*\"", sep = ""), intern = T)
+  filesystem_filepaths <- filesystem_filepaths[grep(filepattern, filesystem_filepaths, perl = T)]
+
   # COMPARISON
   if (!is.na(table(filesystem_filepaths %in% files)["FALSE"])) {
-    write("\n\nERROR: List of the files which will not be imported by xcmsSet",stderr())
-    write(filesystem_filepaths[!(filesystem_filepaths %in% files)],stderr())
+    write("\n\nERROR: List of the files which will not be imported by xcmsSet", stderr())
+    write(filesystem_filepaths[!(filesystem_filepaths %in% files)], stderr())
     stop("\n\nERROR: One or more of your files will not be import by xcmsSet. It may due to bad characters in their filenames.")
-    
   }
 }
 
@@ -164,18 +185,17 @@ checkFilesCompatibilityWithXcms <- function(directory) {
 ##
 ## This function check if XML contains special caracters. It also checks integrity and completness.
 ##
-#@author Misharl Monsoor misharl.monsoor@sb-roscoff.fr ABiMS TEAM
-checkXmlStructure <- function (directory) {
+# @author Misharl Monsoor misharl.monsoor@sb-roscoff.fr ABiMS TEAM
+checkXmlStructure <- function(directory) {
   cat("Checking XML structure...\n")
-  
-  cmd=paste("IFS=$'\n'; for xml in $(find",directory,"-not -name '\\.*' -not -path '*conda-env*' -type f -iname '*.*ml*'); do if [ $(xmllint --nonet --noout \"$xml\" 2> /dev/null; echo $?) -gt 0 ]; then echo $xml;fi; done;")
-  capture=system(cmd,intern=TRUE)
-  
-  if (length(capture)>0){
-    #message=paste("The following mzXML or mzML file is incorrect, please check these files first:",capture)
+
+  cmd <- paste("IFS=$'\n'; for xml in $(find", directory, "-not -name '\\.*' -not -path '*conda-env*' -type f -iname '*.*ml*'); do if [ $(xmllint --nonet --noout \"$xml\" 2> /dev/null; echo $?) -gt 0 ]; then echo $xml;fi; done;")
+  capture <- system(cmd, intern = TRUE)
+
+  if (length(capture) > 0) {
+    # message=paste("The following mzXML or mzML file is incorrect, please check these files first:",capture)
     write("\n\nERROR: The following mzXML or mzML file(s) are incorrect, please check these files first:", stderr())
     write(capture, stderr())
     stop("ERROR: xcmsSet cannot continue with incorrect mzXML or mzML files")
   }
-  
 }
