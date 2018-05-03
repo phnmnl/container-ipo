@@ -25,7 +25,7 @@ getInfos <- function(mzdatafiles) {
 ## This function launch IPO functions to get the best parameters for xcmsSet
 ## 5% but at least 10 files of the whole dataset is used to save processing time
 ##
-ipo4xcmsSet <- function(directory, parametersOutput, listArguments) {
+ipo4xcmsSet <- function(directory, parametersOutput, listArguments, samplebyclass=4) {
   setwd(directory)
 
   files <- list.files(".", recursive = T)
