@@ -5,11 +5,12 @@
 getInfos = function(mzdatafiles){
   
   # Get informations about instruments used and run
-  file.format = c("mzData", "mzdata")
-  if(tools::file_ext(mzdatafiles) %in% file.format){
-    ms = openMSfile(mzdatafiles, backend="Ramp")
+  if (tools::file_ext(mzdatafiles) %in% c("mzData", "mzdata")) {
+    ms <- openMSfile(mzdatafiles, backend = "Ramp")
+  } else if (tools::file_ext(mzdatafiles) %in% c("CDF", "cdf")) {
+    ms <- openMSfile(mzdatafiles, backend = "netCDF")
   } else {
-    ms = openMSfile(mzdatafiles)
+    ms <- openMSfile(mzdatafiles)
   }
   
   runInfo = t(sapply(runInfo(ms), function(x) x[1], USE.NAMES=TRUE))
