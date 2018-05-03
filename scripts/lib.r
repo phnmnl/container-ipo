@@ -29,28 +29,8 @@ ipo4xcmsSet <- function(directory, parametersOutput, listArguments, samplebyclas
   setwd(directory)
 
   files <- list.files(".", recursive = T)
-
-  # Check if there are blank files
-  # TODO Change the method retrieving blank samples, with a more "official way" then "grep"
-  #      - To improve in the future, when new specifications of ISA-Tab make it easier to detect blanks
-  blank.files <- grep("blan(k|c)", files, ignore.case = TRUE, value = TRUE)
-  # Keep only QCs or pool files if possible since they are more representative of the experimental study
-  representative.files <- grep("(QC)|(pool)", files, ignore.case = TRUE, value = TRUE)
-  if (length(representative.files) != 0) { # If pools or QC, keep only them
-    file.copy(representative.files, assay.folder)
-    if (length(blank.files) != 0) { # Keep also blanks if there are
-      file.copy(blank.files, assay.folder)
-    }
-  } else {
-    # To reduce processing time, keep 5% but at least 10 raw data files of the assay
-    if (ceiling((5 * length(files)) / 100) < 10) {
-      files <- sample(files, 10)
-    } else {
-      files <- sample(files, ceiling((5 * length(files)) / 100))
-    }
-    file.copy(files, assay.folder)
-  }
-
+  files_classes = basename(dirname(files))
+  
   mzmlfiles <- files
   if (samplebyclass > 0) {
     # random selection of N files for IPO in each class
