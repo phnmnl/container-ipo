@@ -43,7 +43,7 @@
         samplebyclass $samplebyclass
 
         ## profmethod $profmethod
-        @COMMAND_NSLAVES@
+
         method $methods.method
         #if $methods.method == "centWave":
             ppm "c($methods.section_centwave_optiomizable.conditional_parameter.ppm)"

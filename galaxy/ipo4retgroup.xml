@@ -32,8 +32,6 @@
         
         samplebyclass $samplebyclass
 
-        @COMMAND_NSLAVES@
-
         ## group methods
 
         sleep 0.001

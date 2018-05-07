@@ -13,20 +13,12 @@
         </stdio>
     </xml>
 
-    <token name="@COMMAND_SCRIPT@">
-        LANG=C Rscript $__tool_directory__/
-    </token>
-
     <token name="@COMMAND_LOG_EXIT@">
         ;
         return=\$?;
         mv log.txt $log;
         cat $log;
         sh -c "exit \$return"
-    </token>
-
-    <token name="@COMMAND_NSLAVES@">
-        nSlaves \${GALAXY_SLOTS:-1}
     </token>
 
     <!-- zipfile load for planemo test -->
