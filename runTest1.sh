@@ -65,3 +65,4 @@ if [ ! -s ipoworkingdir/MTBLS117_IPO_parameters4xcmsSet.tsv ] || [ ! -s ipoworki
 fi
 
 echo "massIPO runs with test data without error codes, all expected files created."
+
