@@ -16,7 +16,6 @@ sink(log_file, type = "output")
 # ----- PACKAGE -----
 options(bitmapType = "cairo")
 cat("\tPACKAGE INFO\n")
-# pkgs=c("xcms","batch")
 pkgs <- c("parallel", "BiocGenerics", "Biobase", "Rcpp", "mzR", "xcms", "rsm", "igraph", "CAMERA", "IPO", "snow", "batch")
 
 for (pkg in pkgs) {
@@ -58,10 +57,9 @@ if (!is.null(listArguments[["parametersOutput"]])) {
   listArguments[["parametersOutput"]] <- NULL
 }
 
-samplebyclass <- 2
-if (!is.null(listArguments[["samplebyclass"]])) {
-  samplebyclass <- listArguments[["samplebyclass"]]
-  listArguments[["samplebyclass"]] <- NULL
+if (!is.null(listArguments[["sampleMetadataFile"]])) {
+  sample.metadata.file <- listArguments[["sampleMetadataFile"]]
+  listArguments[["sampleMetadataFile"]] <- NULL
 }
 
 # necessary to unzip .zip file uploaded to Galaxy
@@ -143,7 +141,7 @@ cat("\n\n")
 cat("\tMAIN PROCESSING INFO\n")
 
 
-ipo4retgroup(xset, directory, parametersOutput, listArguments, samplebyclass)
+ipo4retgroup(xset, sample.metadata.file, directory, parametersOutput, listArguments)
 
 cat("\n\n")
 

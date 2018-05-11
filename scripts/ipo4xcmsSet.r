@@ -17,7 +17,6 @@ sink(log_file, type = "output")
 # ----- PACKAGE -----
 options(bitmapType = "cairo")
 cat("\tPACKAGE INFO\n")
-# pkgs=c("xcms","batch")
 pkgs <- c("parallel", "BiocGenerics", "Biobase", "Rcpp", "mzR", "xcms", "rsm", "igraph", "CAMERA", "IPO", "snow", "batch")
 
 for (pkg in pkgs) {
@@ -61,12 +60,6 @@ parametersOutput <- "IPO_parameters4xcmsSet.tsv"
 if (!is.null(listArguments[["parametersOutput"]])) {
   parametersOutput <- listArguments[["parametersOutput"]]
   listArguments[["parametersOutput"]] <- NULL
-}
-
-samplebyclass <- 2
-if (!is.null(listArguments[["samplebyclass"]])) {
-  samplebyclass <- listArguments[["samplebyclass"]]
-  listArguments[["samplebyclass"]] <- NULL
 }
 
 # necessary to unzip .zip file uploaded to Galaxy
@@ -144,7 +137,7 @@ cat("\n\n")
 
 cat("\tMAIN PROCESSING INFO\n")
 
-resultPeakpicking <- ipo4xcmsSet(directory, parametersOutput, listArguments, samplebyclass)
+resultPeakpicking <- ipo4xcmsSet(directory, parametersOutput, listArguments)
 
 cat("\n\n")
 

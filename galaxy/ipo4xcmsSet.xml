@@ -37,14 +37,12 @@
         #end if
 
         parametersOutput $parametersOutput
-        
-        optimResultsRdataOutput $resultPeakpicking
 
-        samplebyclass $samplebyclass
+        optimResultsRdataOutput $resultPeakpicking
 
         ## profmethod $profmethod
 
-        method $methods.method
+	method $methods.method
         #if $methods.method == "centWave":
             ppm "c($methods.section_centwave_optiomizable.conditional_parameter.ppm)"
             min_peakwidth "c($methods.section_centwave_optiomizable.conditional_parameter.min_peakwidth)"
@@ -72,8 +70,6 @@
     <inputs>
 
         <param name="ipo4xcmsSet_input" type="data" format="mzxml,mzml,mzdata,netcdf,no_unzip.zip,zip" label="File(s) from your history containing your chromatograms" help="Single file mode for the format: mzxml, mzml, mzdata and netcdf. Zip file mode for the format: no_unzip.zip, zip. See the help section below." />
-
-        <param name="samplebyclass" type="integer" value="2" label="Number of samples used per class to estimate the best parameters" help="Set to 0 to use the whole dataset. To save time, reduce this number" />
 
         <conditional name="methods">
             <param name="method" type="select" label="Extraction method for peaks detection" help="[method] See the help section below">
@@ -174,7 +170,6 @@
     <tests>
         <test>
             <param name="ipo4xcmsSet_input" value="MM14.mzML"  ftype="mzxml" />
-            <param name="samplebyclass" value="0" />
             <conditional name="methods">
                 <param name="method" value="centWave" />
                 <section name="section_centwave_optiomizable" >
@@ -191,7 +186,6 @@
         </test>
         <test>
             <param name="ipo4xcmsSet_input" value="MM14.mzML"  ftype="mzxml" />
-            <param name="samplebyclass" value="0" />
             <conditional name="methods">
                 <param name="method" value="centWave" />
                 <section name="section_centwave_optiomizable" >
@@ -210,7 +204,6 @@
         <!--<test>
             <param name="inputs|ipo4xcmsSet_input" value="zip_file" />
             <param name="inputs|zip_file" value="sacuri_2files.zip"  ftype="zip" />
-            <param name="samplebyclass" value="1" />
             <param name="methods|method" value="centWave" />
             <param name="methods|ppm" value="25" />
             <param name="methods|min_peakwidth" value="20,30" />
@@ -221,7 +214,6 @@
         <!--<test>
             <param name="inputs|ipo4xcmsSet_input" value="zip_file" />
             <param name="inputs|zip_file" value="sacuri_2files.zip"  ftype="zip" />
-            <param name="samplebyclass" value="1" />
             <param name="methods|method" value="matchedFilter" />
             <param name="methods|step" value="0.05,0.15" />
             <param name="methods|fwhm" value="25,35" />
@@ -260,7 +252,7 @@ Description
 
 -----------------
 Workflow position
------------------  
+-----------------
 
 |
 
@@ -270,7 +262,7 @@ Workflow position
  Name                      output file    format   parameter
 ========================= ============== ======== ===========
  NA                        NA             NA       NA
-========================= ============== ======== ===========  
+========================= ============== ======== ===========
 
 |
 
@@ -280,13 +272,13 @@ Workflow position
 | Name                      | Output file                    | Format          |
 +===========================+================================+=================+
 | ipo4retgroup              | IPO_parameters4retcorGroup.tsv | Tabular         |
-+---------------------------+--------------------------------+-----------------+  
++---------------------------+--------------------------------+-----------------+
 
 |
 
 -----------
 Input files
------------  
+-----------
 
 |
 
@@ -294,7 +286,7 @@ Input files
 | Parameter : num + label   |   Format                              |
 +===========================+=======================================+
 | 1 : Choose your inputs    |   zip, mzML, mzXML, mzData, netCDF    |
-+---------------------------+---------------------------------------+  
++---------------------------+---------------------------------------+
 
 |
 
