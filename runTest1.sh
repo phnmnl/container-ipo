@@ -33,6 +33,7 @@ if [ ! -s IPO_results/rsm_$index.jpg ]; then
         echo "JPG graph rsm_$index.jpg not found or empty, failing test"
         exit 1
 fi
+done
 
 for index in `seq 1 2`; do
 if [ ! -s IPO_results/retgroup_rsm_$index.jpg ]; then
@@ -65,4 +66,3 @@ if [ ! -s ipoworkingdir/MTBLS117_IPO_parameters4xcmsSet.tsv ] || [ ! -s ipoworki
 fi
 
 echo "massIPO runs with test data without error codes, all expected files created."
-
