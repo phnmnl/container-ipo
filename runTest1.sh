@@ -8,7 +8,7 @@ wget "https://github.com/phnmnl/container-ipo/raw/develop/test/MTBLS117_POS_W4M_
 
 # Peak picking first
 #ipo4xcmsSet.r singlefile_galaxyPath /usr/local/bin/MM14.mzML singlefile_sampleName MM14.mzML parametersOutput MM14_IPO_parameters4xcmsSet.tsv nSlaves 4 minPeakWidth 3,9.5 maxPeakWidth 10,20 ppm 56
-ipo4xcmsSet.r method centWave zipfile /usr/local/bin/a_mtbls117_DIMS_POS_mass_spectrometry.zip parametersOutput IPO_parameters4xcmsSet_ppm.tsv nSlaves 4
+ipo4xcmsSet.r method centWave zipfile /usr/local/bin/a_mtbls117_DIMS_POS_mass_spectrometry.zip parametersOutput MTBLS117_IPO_parameters4xcmsSet.tsv nSlaves 4
 
 # Then Grouping
 # ipo4retgroup.r image best_xcmsSet.RData parametersOutput MM14_IPO_parameters4retcorGroup.tsv method density singlefile_galaxyPath /usr/local/bin/MM14.mzML singlefile_sampleName MM14.mzML retcorMethod obiwarp nSlaves 4
@@ -28,7 +28,7 @@ ipo4retgroup.r sampleMetadataFile /usr/local/bin/MTBLS117_POS_W4M_sampleMetadata
 # done
 
 
-for index in `seq 1 5`; do
+for index in `seq 1 4`; do
 if [ ! -s IPO_results/rsm_$index.jpg ]; then
         echo "JPG graph rsm_$index.jpg not found or empty, failing test"
         exit 1
