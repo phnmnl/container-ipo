@@ -128,13 +128,13 @@ ipo4retgroup <- function(xset, sample.metadata.file, directory, parametersOutput
   if (length(factors) != 0) {
     # Link all files to their factors
     factors <- cbind(sample.metadata$Raw.Spectral.Data.File, factors)
-    # Get files that are in the xcmsSet object
-    files.index <- which(basename(xset@filepaths) %in% as.character(sample.metadata$Raw.Spectral.Data.File))
+    # Get indexes of files that are in the xcmsSet object
+    files.index <- which(as.character(sample.metadata$Raw.Spectral.Data.File) %in% basename(xset@filepaths))
     # Get the factors of these files respectively
-    factors.of.files <- factors[files.index, ]
+    factors.of.files <- factors[files.index, 2:length(factors)]
     # Fill the phenoData of xset: indicate the experimental design factors
     # for grouping and retention time correction
-    `sampclass<-`(xset, factors.of.files)
+    xset <- `sampclass<-`(xset, factors.of.files)
   } else {
     cat("\n\nWARNING: no factors found, check that the sample metadata file is correct.\nNo sample class is set for the xcmsSet object.\n\n")
   }
