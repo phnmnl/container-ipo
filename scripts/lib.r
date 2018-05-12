@@ -126,8 +126,10 @@ ipo4retgroup <- function(xset, sample.metadata.file, directory, parametersOutput
   # Get all factors columns
   factors <- sample.metadata[, grep("Factor.Value.*", colnames(sample.metadata), value = TRUE, ignore.case = TRUE)]
   if (length(factors) != 0) {
-    # Get indices of files in the xset
-    files.index <- which(sample.metadata["Raw.Spectral.Data.File"] == basename(xset@filepaths))
+    # Link all files to their factors
+    factors <- cbind(sample.metadata$Raw.Spectral.Data.File, factors)
+    # Get files that are in the xcmsSet object
+    files.index <- which(basename(xset@filepaths) %in% as.character(sample.metadata$Raw.Spectral.Data.File))
     # Get the factors of these files respectively
     factors.of.files <- factors[files.index, ]
     # Fill the phenoData of xset: indicate the experimental design factors
