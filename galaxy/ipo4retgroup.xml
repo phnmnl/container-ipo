@@ -74,7 +74,7 @@
 
         <param name="image" type="data" format="rdata.xcms.raw,rdata.xcms.group,rdata.xcms.retcor,rdata" label="xset RData file" help="output file from another function xcms (xcmsSet, retcor etc.)" />
 
-        <param name="sampleMetadataFile" type="data" format="csv,tsv" optional="true" label="Sample metadata file" help="File that makes the association between mz files and their respective factors. See below for more informations." />
+        <param name="sampleMetadataFile" type="data" format="csv,tsv,tabular" optional="true" label="Sample metadata file" help="File that makes the association between mz files and their respective factors. See below for more informations." />
 
         <section name="group" title="Group Options" expanded="True">
             <conditional name="methods">
