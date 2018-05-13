@@ -89,13 +89,9 @@ ipo4xcmsSet <- function(directory, parametersOutput, listArguments) {
     infos <- cbind(filename, one.file.infos$instrumentInfo, one.file.infos$runInfo)
     table <- rbind(table, infos)
   }
-  # Change output files path in case of zip file
-  if (grepl("ipoworkingdir", getwd())) {
-    write.table(table, file = "../../run_instrument_infos.tsv", sep = "\t", row.names = F, col.names = T, quote = F)
-  } else {
-    write.table(table, file = "../run_instrument_infos.tsv", sep = "\t", row.names = F, col.names = T, quote = F)
-  }
-
+  # Export run and instrument infos
+  write.table(table, file = "../run_instrument_infos.tsv", sep = "\t", row.names = F, col.names = T, quote = F)
+  # Export best parameters of peak picking
   write.table(as.matrix(resultPeakpicking_best_settings_parameters), file = parametersOutput, sep = "\t", row.names = T, col.names = F, quote = F)
 
   # Returns best settings containing among others:
