@@ -2,13 +2,13 @@
 ## This function retrieves runinfos and instrument infos from
 ## mzfile given in argument
 ##
-getInfos <- function(mzdatafiles) {
+getInfos <- function(mzdatafile) {
 
   # Get informations about instruments used and run
-  ms <- openMSfile(mzdatafiles)
+  ms <- openMSfile(mzdatafile)
 
-  runInfo <- t(sapply(runInfo(ms), function(x) x[1], USE.NAMES = TRUE))
-  instrumentInfo <- t(sapply(instrumentInfo(ms), function(x) x, USE.NAMES = TRUE))
+  runInfo <- t(runInfo(ms))
+  instrumentInfo <- t(instrumentInfo(ms))
 
   infos <- list("runInfo" = runInfo, "instrumentInfo" = instrumentInfo)
   return(infos)
@@ -153,7 +153,7 @@ ipo4retgroup <- function(xset, sample.metadata.file, directory, parametersOutput
 
 
 ##
-## This function checks if xcms will found all the files
+## This function checks if xcms will find all the files
 ##
 # @author Gildas Le Corguille lecorguille@sb-roscoff.fr ABiMS TEAM
 checkFilesCompatibilityWithXcms <- function(directory) {
@@ -184,7 +184,7 @@ checkFilesCompatibilityWithXcms <- function(directory) {
 
 
 ##
-## This function check if XML contains special caracters. It also checks integrity and completness.
+## This function checks if XML contains special caracters. It also checks integrity and completness.
 ##
 # @author Misharl Monsoor misharl.monsoor@sb-roscoff.fr ABiMS TEAM
 checkXmlStructure <- function(directory) {
