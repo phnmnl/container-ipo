@@ -37,8 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       icu-devtools \
       netcdf-bin && \
     echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site && \
-    R -e 'install.packages(c("batch", "rsm", "devtools"))' && \
-    R -e 'library(devtools); install_github(c("grimbough/Rhdf5lib", "sneumann/mzR"))' && \
+    R -e 'install.packages(c("batch", "rsm", "devtools")); library(devtools); install_github(c("grimbough/Rhdf5lib", "sneumann/mzR"))' && \
     R -e 'source("https://bioconductor.org/biocLite.R");  biocLite("IPO"); remove.packages("devtools")' && \
     apt-get --purge -y --auto-remove remove make gcc gfortran g++ r-base-dev git libcurl4-openssl-dev libssl-dev libssh2-1-dev libboost-dev && \
 	  apt-get clean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* /var/lib/{cache,log}/ /tmp/* /var/tmp/*
