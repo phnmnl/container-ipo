@@ -27,14 +27,14 @@ ipo4retgroup.r sampleMetadataFile /usr/local/bin/MTBLS117_POS_W4M_sampleMetadata
 # done
 
 
-for index in `seq 1 3`; do
+for index in `seq 1 4`; do
 if [ ! -s IPO_results/rsm_$index.jpg ]; then
         echo "JPG graph rsm_$index.jpg not found or empty, failing test"
         exit 1
 fi
 done
 
-for index in `seq 1 3`; do
+for index in `seq 1 2`; do
 if [ ! -s IPO_results/retgroup_rsm_$index.jpg ]; then
         echo "JPG graph retgroup_rsm_$index.jpg not found or empty, failing test"
         exit 1
