@@ -23,6 +23,8 @@ COPY scripts/* /usr/local/bin/
 # Rhdf5lib >= 1.1.4 is required by 'sneumann-mzR-4f83846'
 ######
 RUN apt-get update && apt-get install -y --no-install-recommends \
+      wget \
+      ca-certificates \
       make \
       gcc \
       gfortran \
@@ -40,10 +42,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     echo 'options("repos"="http://cran.rstudio.com")' >> /etc/R/Rprofile.site && \
     R -e 'install.packages("devtools"); library("devtools"); install_github("grimbough/Rhdf5lib"); install_github("sneumann/mzR"); install.packages(c("batch", "rsm"))' && \
     R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("IPO");' && \
-    R -e 'remove.packages(c("devtools"))' && \
-    
-    
-    apt-get --purge -y --auto-remove remove make gcc gfortran g++ r-base-dev git libcurl4-openssl-dev libssl-dev libssh2-1-dev libboost-dev && \
+    apt-get --purge -y --auto-remove remove make gcc gfortran g++ libcurl4-openssl-dev libssl-dev libssh2-1-dev libboost-dev && \
 	  apt-get clean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* /var/lib/{cache,log}/ /tmp/* /var/tmp/*
 
 # Add testing to container
