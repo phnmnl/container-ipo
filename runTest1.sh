@@ -1,5 +1,4 @@
 #!/bin/bash
-apt-get update -y && apt-get install -y --no-install-recommends wget ca-certificates
 
 # download test data file
 # wget "https://raw.githubusercontent.com/workflow4metabolomics/ipo/master/galaxy/ipo/test-data/MM14.mzML" -O "/usr/local/bin/MM14.mzML"
