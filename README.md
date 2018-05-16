@@ -76,7 +76,7 @@ And then to run:
 docker run --entrypoint "runIPO.R" ipo -i /complete/path/to/filesPaths -o /complete/path/to/out
 ```
 
-On Mac OS X with docker-machine, because there is this intermediate VM, it is recommended to mount a high level directory on docker (as /Users, which will be already mounted on the docker-machine VM.
+On Mac OS X with docker-machine, because there is this intermediate VM, it is recommended to mount a high level directory on docker (as /Users), which will be already mounted on the docker-machine VM.
 
 ```
 docker run --entrypoint "runIPO.R" -v /Users:/Users ipo -i /Users/yourUser/path/to/filesPaths -o /Users/yourUser/path/to/out
