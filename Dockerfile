@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       gcc \
       gfortran \
       g++ \
+      r-base-dev \
       libblas-dev \
       liblapack-dev \
       libboost-dev \
